@@ -1,7 +1,9 @@
 var DataSource = require('loopback-datasource-juggler').DataSource;
 var db = new DataSource(require('../index'), {
-  contactPoints: [ '127.0.0.1' ],
-  keyspace: 'demo'
+  contactPoints: ["127.0.0.1"],
+  keyspace: 'demo',
+  partitionKey:"title",
+  clustaringKeys:["description"]
   
 });
 var model = {
@@ -23,9 +25,9 @@ var movies = [
              console.log(err);
          } else {
              console.log("Inserted :", h);
-             //Movie.find({where: {title: 'Rambo'}}, function (err, arr) {
-             //  console.log("Find' : \n", arr);
-             // });
+             Movie.find({where: {title: 'Rambo'}}, function (err, arr) {
+              console.log("Find' : \n", arr);
+              });
          }
      });
  });

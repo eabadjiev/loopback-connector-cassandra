@@ -15,7 +15,10 @@
 	"express": "^4.9"
   },
   "devDependencies": {
-    "loopback-datasource-juggler": "^2.25.0"
+    "loopback-datasource-juggler": "^2.25.0",
+	 "mocha": "^2.2.1",
+    "rc": "^1.0.1",
+    "should": "^5.2.0"
 
   }
 }
