@@ -1,7 +1,7 @@
 var DataSource = require('loopback-datasource-juggler').DataSource;
 var db = new DataSource(require('../index'), {
     contactPoints: ["127.0.0.1"],
-    keyspace: 'demo',
+    keyspace: "demo",
     partitionKey:"title",
     clustaringKeys:["description"]
 
@@ -43,7 +43,12 @@ db.automigrate(undefined,function() {
                         else {
                             console.log("\nData after updated :",data);
                         }
-                        // DELETE
+                        Movie.destroyAll({title: 'Rambo'}, function(err, data){
+
+                            Movie.all(function(err, data){
+                                console.log(data);
+                            });
+                        });
 
                     });
                 });
@@ -51,3 +56,4 @@ db.automigrate(undefined,function() {
         }
     });
 });
+console.log(db);
