@@ -12,13 +12,13 @@ var db = new DataSource(require('../index'), {
 var model = {
     'title': {'type': String},
     'description': {'type': String},
-    'Language': {'type': String}
+    'Language1': {'type': String}
 };
 var Movie = db.define('Movie', model);
 var movies = [
-    {title: 'Benher', description: 'Histry',Language:'English'},
-    {title: 'Titanic', description: 'Romance',Language:'English'},
-    {title: 'Rambo', description: 'Action',Language:'English'},
+    {title: 'Benher', description: 'Histry',Language1:'English'},
+    {title: 'Titanic', description: 'Romance',Language1:'English'},
+    {title: 'Rambo', description: 'Action',Language1:'English'},
 
 ];
 
@@ -27,28 +27,35 @@ db.isActual('Movie',function(err, actual) {
         // Update Model
         db.autoupdate(function(){
             // CREATE
-            Movie.create(heroes, function(err, h){
+            Movie.create(movies, function (err, h) {
                 if(err){
                     console.log(err);
                 } else {
-                    console.log("Created: \n", h);
-                    // FIND
-                    Movie.find({where: {universe: 'DC'}}, function(err, arr){
-                        console.log("\nFind by universe 'DC' : \n", arr);
-                        // UPDATE
-                        Movie.update({universe: 'DC'}, {universe: 'DC Comics'}, function(err, data){
-                            console.log("\nData after updating universe:");
+                    console.log("Inserted :", h);
+                    Movie.find({where: {title: 'Rambo'}}, function (err, arr) {
+                        console.log("Find' : \n", arr);
+                        var idval=arr[0].id;
+                        Movie.update({title: 'Rambo',id:parseFloat(idval),description:'Action'}, {Language1: 'Marathi'}, function(err, data){
+
+                            if(err){
+                                console.log("error:"+err.message);
+                            }
+
                             //Show All
                             Movie.all(function(err, data){
-                                console.log(data);
-                                console.log("\nData after deleting a row:");
-                                // DELETE
-                                Movie.destroyAll({name: 'Aquaman'}, function(err, data){
-                                    //Show All after delete
+                                if(err){
+                                    console.log("error:"+err.message);
+                                }
+                                else {
+                                    console.log("\nData after updated :",data);
+                                }
+                                Movie.destroyAll({title: 'Rambo'}, function(err, data){
+
                                     Movie.all(function(err, data){
                                         console.log(data);
                                     });
                                 });
+
                             });
                         });
                     });

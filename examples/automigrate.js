@@ -56,4 +56,3 @@ db.automigrate(undefined,function() {
         }
     });
 });
-console.log(db);
